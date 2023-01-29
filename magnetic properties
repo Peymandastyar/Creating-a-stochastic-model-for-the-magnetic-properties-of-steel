@@ -1,3 +1,11 @@
+import numpy as np np.set_printoptions(precision=3)
+import matplotlib.pyplot as plt
+import seaborn as sns sns.set(rc={"figure.dpi":100, "savefig.dpi":300}) sns.set_context("notebook") sns.set_style("ticks")
+import scipy
+import scipy.stats as st
+import urllib.request
+import os
+ 
  url = "https://github.com/PredictiveScienceLab/data-analytics-se/raw/master/lecturebook/data/B_data.csv" 
  download(url)
  
