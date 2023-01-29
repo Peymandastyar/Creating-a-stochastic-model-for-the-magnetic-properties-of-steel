@@ -22,3 +22,32 @@
   ax.plot(xs, X.pdf(xs), label='Identified Normal PDF') 
   ax.set_xlabel('$x$')
   ax.set_ylabel('$p(x)$');
+  print('p(X >= 1.66T) = {0:1.2f}'.format(1 - X.cdf(1.66)))
+  Y_data = B_data[:, 1000]
+  fig, ax = plt.subplots() 
+  ax.scatter(X_data, Y_data) 
+  ax.set_xlabel('$x$') 
+  ax.set_ylabel('$y$')
+  XY_data = np.hstack([X_data[:, None], Y_data[:, None]])
+  mu_XY = np.mean(XY_data, axis=0) 
+  print(f"mu_XY = {mu_XY}")
+  C_XY = np.cov(XY_data.T)
+  B_mu = np.mean(B_data, axis=0)
+  B_COV=np.COV(B_data.T)
+  B_corr = np.corrcoef(B_data[:,1:].T)
+  B = st.multivariate_normal(mean=B_mu, cov=B_cov)
+  nugget = 1e-9
+# This is the modified covariance matrix
+B_cov_w_nugget = B_cov + nugget * np.eye(B_cov.shape[0]) 
+# Try building the distribution:
+try:
+B = st.multivariate_normal(mean=B_mu, cov=B_cov_w_nugget)
+print('It worked! Move on.') 
+except:
+print('It did not work. Increase nugget by 10.')
+B_samples = B.rvs(size=10)
+fig, ax = plt.subplots(dpi=100) 
+ax.plot(B_samples.T, 'r', lw=0.1) 
+ax.set_xlabel('Index $j$') 
+ax.set_ylabel('$B$ (T)');
+    print('It did not work. Increase nugget by 10.')
