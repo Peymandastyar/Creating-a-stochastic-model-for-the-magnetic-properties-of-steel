@@ -1,0 +1,24 @@
+ url = "https://github.com/PredictiveScienceLab/data-analytics-se/raw/master/lecturebook/data/B_data.csv" 
+ download(url)
+ 
+  B_data = np.loadtxt('B_data.csv') 
+  fig, ax = plt.subplots() 
+  ax.plot(B_data[:5, :].T) 
+  ax.set_xlabel(r"Index $j$") 
+  ax.set_ylabel(r"$B$ (T)");
+  X_data = B_data[:,500]
+  fig, ax = plt.subplots()
+  ax.hist(X_data, alpha=0.5, density=True) 
+  ax.set_xlabel(r"$x$") 
+  ax.set_ylabel(r"p(x)");
+  mu_500 = X_data.mean() 
+  print(f"mu_500 = {mu_500:.2f}")
+  sigma2_500 = np.var(X_data) 
+  print(f"sigma_500 = {sigma2_500:.2e}")
+  sigma_500 = np.sqrt(sigma2_500)
+  X = st.norm(loc=mu_500, scale=sigma_500)
+  xs = np.linspace(mu_500 - 6 * sigma_500, mu_500 + 6 * sigma_500, 100) fig, ax = plt.subplots(dpi=100)
+  ax.hist(X_data, alpha=0.5, density=True, label='Histogram') 
+  ax.plot(xs, X.pdf(xs), label='Identified Normal PDF') 
+  ax.set_xlabel('$x$')
+  ax.set_ylabel('$p(x)$');
